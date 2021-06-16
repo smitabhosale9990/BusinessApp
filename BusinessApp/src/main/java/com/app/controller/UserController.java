@@ -37,6 +37,7 @@ public class UserController {
 	
 	@PutMapping
 	public UserDTO updateUser(@RequestBody UserDTO userDto) {
+		//System.out.println("change 2")
 		return userService.updateUser(userDto);
 	}
 	
