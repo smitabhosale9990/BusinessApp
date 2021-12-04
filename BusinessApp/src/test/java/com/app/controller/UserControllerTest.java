@@ -34,7 +34,7 @@ class UserControllerTest {
 	
 	@Test
 	void getUserById() {
-		when(userService.getUserById(2L)).thenReturn(new UserDTO(2L, "Smita"));
+		when(userService.getUserById(2L)).thenReturn(new UserDTO(2L, "Smita", "smita@gmail.com", "123"));
 		UserDTO userDto = userController.getUserById(2L);
 		assertNotNull(userDto);
 		assertEquals("Smita", userDto.getName());

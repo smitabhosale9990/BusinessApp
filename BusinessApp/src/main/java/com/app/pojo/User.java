@@ -9,37 +9,55 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User extends BasePojo{
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
 	private Long 	id;
+	
+	@Column(name = "name")
 	private String 	name;
+	
+	@Column(name = "email")
+	private String 	emailId;
+	
+	@Column(name = "password")
+	private String 	password;
 	
 	public User() {
 	}
 
-	public User(Long id, String name) {
+	public User(Long id, String name, String emailId, String password) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.emailId  = emailId;
+		this.password = password;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
 	public Long getId() {
 		return id;
 	}
-
-	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
-	
+	public String getEmailId() {
+		return emailId;
+	}
+	public String getPassword() {
+		return password;
+	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public void setName(String name) {
 		this.name = name;
+	}
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

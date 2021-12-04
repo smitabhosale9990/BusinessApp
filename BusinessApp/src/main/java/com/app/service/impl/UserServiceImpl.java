@@ -1,10 +1,13 @@
 package com.app.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.app.converter.DtoToPojoConverter;
 import com.app.converter.PojoToDtoConverter;
 import com.app.dto.UserDTO;
+import com.app.exceptions.AuthenticationException;
 import com.app.pojo.User;
 import com.app.repository.UserRepository;
 import com.app.service.UserService;
@@ -18,6 +21,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDTO getUserById(Long userId) {
 		return PojoToDtoConverter.convert(userRepository.getOne(userId));
+	}
+	
+	@Override
+	public List<UserDTO> getAllUsers() {
+		List<User> users = userRepository.findAll();
+		List<UserDTO> userList = new ArrayList<>();
+		for (User user : users) {
+			userList.add(PojoToDtoConverter.convert(user));
+		}
+		return userList;
 	}
 
 	@Override
@@ -39,5 +52,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUserById(Long userId) {
 		userRepository.deleteById(userId);
+	}
+
+	@Override
+	public UserDTO loginUser(UserDTO userDto) throws AuthenticationException {
+		
+		User user = userRepository.getUserByEmailIdAndPassword(userDto.getEmailId(), userDto.getPassword());
+		if(user != null) {
+			return PojoToDtoConverter.convert(user);
+		} else {
+			throw new AuthenticationException("Invalid username or password");
+		}
 	}
 }
